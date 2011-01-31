@@ -62,7 +62,7 @@ CGImageRef jx_CGImageCreateRotatedClockwiseByAngle(CGImageRef imgRef, CGFloat an
 					   imgRef);
 	
 	CGImageRef rotatedImage = CGBitmapContextCreateImage(context);
-	//CFMakeCollectable(rotatedImage);
+	CFMakeCollectable(rotatedImage);
 	
 	CFRelease(context);
 	
@@ -100,7 +100,7 @@ CGImageRef jx_CFImageCreateFromRGBBytesInCFDataRef(CFDataRef rgbData, size_t wid
 										   NULL, 
 										   true, 
 										   kCGRenderingIntentDefault);
-	//CFMakeCollectable(rgbImageRef);
+	CFMakeCollectable(rgbImageRef);
 	
 	CGColorSpaceRelease(colorspace);
 
