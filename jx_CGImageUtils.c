@@ -84,11 +84,10 @@ void jx_CGImageExportToURL(CGImageRef image, CFURLRef url) {
 	CFRelease(dest);
 }
 
-CGImageRef jx_CFImageCreateFromRGBByteArray(UInt8 *pixelData, size_t width, size_t height, size_t components) {
-	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-	
-	CFDataRef rgbData = CFDataCreate(NULL, pixelData, width * height * sizeof(UInt8) * components);
+CGImageRef jx_CFImageCreateFromRGBBytesInCFDataRef(CFDataRef rgbData, size_t width, size_t height, size_t components) {
 	CGDataProviderRef provider = CGDataProviderCreateWithCFData(rgbData);
+	
+	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
 	
 	CGImageRef rgbImageRef = CGImageCreate(width, 
 										   height, 
@@ -101,10 +100,19 @@ CGImageRef jx_CFImageCreateFromRGBByteArray(UInt8 *pixelData, size_t width, size
 										   NULL, 
 										   true, 
 										   kCGRenderingIntentDefault);
-	
-	CFRelease(rgbData);
-	CGDataProviderRelease(provider);
+	//CFMakeCollectable(rgbImageRef);
 	
 	CGColorSpaceRelease(colorspace);
+
+	CGDataProviderRelease(provider);
+	
+	return rgbImageRef;
+}
+
+CGImageRef jx_CFImageCreateFromRGBByteArray(UInt8 *pixelData, size_t width, size_t height, size_t components) {
+	CFDataRef rgbData = CFDataCreate(NULL, pixelData, width * height * sizeof(UInt8) * components);
+	CGImageRef rgbImageRef = jx_CFImageCreateFromRGBBytesInCFDataRef(rgbData, width, height, components);
+	CFRelease(rgbData);
+	
 	return rgbImageRef;
 }
