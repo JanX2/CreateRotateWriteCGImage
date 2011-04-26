@@ -42,7 +42,7 @@ int main (int argc, const char * argv[]) {
 	}
 #endif
 	
-	CGImageRef rgbImageRef = jx_CFImageCreateFromRGBByteArray(pixelData, WIDTH, HEIGHT, COMPONENTS);
+	CGImageRef rgbImageRef = jx_CGImageCreateFromRGBByteArray(pixelData, WIDTH, HEIGHT, COMPONENTS);
 	
 	// Rotate left by 90°
 	CGImageRef rotatedRGBImageRef = jx_CGImageCreateRotatedClockwiseByAngle(rgbImageRef, -90.0f);

@@ -1,6 +1,6 @@
 /*
  *  jx_CGImageUtils.c
- *  CreateRotateWriteCFImage
+ *  CreateRotateWriteCGImage
  *
  *  Created by Jan on 31.01.11.
  *  Copyright 2011 geheimwerk.de. All rights reserved.
@@ -84,7 +84,7 @@ void jx_CGImageExportToURL(CGImageRef image, CFURLRef url) {
 	CFRelease(dest);
 }
 
-CGImageRef jx_CFImageCreateFromRGBBytesInCFDataRef(CFDataRef rgbData, size_t width, size_t height, size_t components) {
+CGImageRef jx_CGImageCreateFromRGBBytesInCFDataRef(CFDataRef rgbData, size_t width, size_t height, size_t components) {
 	CGDataProviderRef provider = CGDataProviderCreateWithCFData(rgbData);
 	
 	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
@@ -109,9 +109,9 @@ CGImageRef jx_CFImageCreateFromRGBBytesInCFDataRef(CFDataRef rgbData, size_t wid
 	return rgbImageRef;
 }
 
-CGImageRef jx_CFImageCreateFromRGBByteArray(UInt8 *pixelData, size_t width, size_t height, size_t components) {
+CGImageRef jx_CGImageCreateFromRGBByteArray(UInt8 *pixelData, size_t width, size_t height, size_t components) {
 	CFDataRef rgbData = CFDataCreate(NULL, pixelData, width * height * sizeof(UInt8) * components);
-	CGImageRef rgbImageRef = jx_CFImageCreateFromRGBBytesInCFDataRef(rgbData, width, height, components);
+	CGImageRef rgbImageRef = jx_CGImageCreateFromRGBBytesInCFDataRef(rgbData, width, height, components);
 	CFRelease(rgbData);
 	
 	return rgbImageRef;
